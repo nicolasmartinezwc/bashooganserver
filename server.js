@@ -8,7 +8,7 @@ const RoomsManager = require('./RoomsManager');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const allowedConsoleIPs = ['::1', '127.0.0.1']; // IPv6 y IPv4 localhost
+const allowedConsoleIPs = ['::1', '127.0.0.1']; // IPv6 & IPv4 localhost
 const roomsManager = new RoomsManager();
 let consoleSocket = null;
 
@@ -20,16 +20,16 @@ io.on('connection', (socket) => {
             consoleSocket = socket;
             consoleSocket.emit('log', '✅ Console started successfully.');
         } else {
-            console.log('❌ The first connection should always be the web client, otherwise the server gets shut down.');
+            console.log('❌ The first connection should always be the web client, otherwise the socket gets disconnected.');
             socket.disconnect(true);
             return
         }
     }
 
     // There should always be a consoleSocket instance.
-    consoleSocket.emit('log', 'New user connected:' + socket.id);
+    consoleSocket.emit('log', 'New user connected: ' + socket.id);
 
-    roomsManager.findGame(socket);
+    roomsManager.findGameFor(socket);
 
     // Disconnect
     socket.on('disconnect', () => {

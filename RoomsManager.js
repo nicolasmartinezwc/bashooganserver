@@ -5,7 +5,7 @@ class RoomsManager {
         this.rooms = new Set();
     }
 
-    findGame(player) {
+    findGameFor(player) {
 
         for (let room of this.rooms) {
             if (!room.isFull()) {
