@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Console</title>
+    <style>
+        /* Estilo básico para la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2f2f2f; /* Gris oscuro casi negro */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Contenedor principal con la lista de botones */
+        #container {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        /* Estilo de la lista de botones */
+        #buttons {
+            background-color: #333;
+            padding: 20px;
+            width: 200px;
+            box-sizing: border-box;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        #buttons button {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #buttons button:hover {
+            background-color: #777;
+        }
+
+        /* Estilo para la consola de log */
+        #console {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffa500; 
+            font-family: 'Courier New', Courier, monospace;
+            height: 100%;
+            overflow-y: auto;
+            box-sizing: border-box;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Lista de botones a la izquierda -->
+        <div id="buttons">
+            <button onclick="clearLogs()">Clear logs</button>
+        </div>
+
+        <div id="console"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Registers the console upon connection.
+        const socket = io('http://localhost:3000');
+
+        // Register messages upon receivement.
+        socket.on('log', (data) => {
+            const consoleElement = document.getElementById('console');
+            consoleElement.textContent += `${data}\n`;
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        });
+
+        function clearLogs() {
+            const consoleElement = document.getElementById('console');
+            consoleElement.textContent = '';
+        }
+    </script>
+</body>
+</html>
