@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
         }
     }
 
-    // There should be an instance of consoleSocket always.
+    // There should always be a consoleSocket instance.
     consoleSocket.emit('log', 'New user connected:' + socket.id);
 
     roomsManager.findGame(socket);
