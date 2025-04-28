@@ -1,8 +1,11 @@
+const Game = require('./Game');
+
 class Room {
     constructor(player) {
         this.maximumAllowedPlayers = 2;
         this.players = new Set([player]);
         this.currentlyPlaying = false;
+        player.emit('joined-room');
     }
 
     hasPlayer(player) {
@@ -20,12 +23,15 @@ class Room {
 
     startGame() {
         this.currentlyPlaying = true;
-        // this.players.forEach(player => player.socket.emit('game-started'));
+        this.players.forEach(player => player.emit('game-started'));
+        this.game = new Game(this.players, this.consoleSocket);
     }
 
     finishGame() {
+        this.players.forEach(player => player.emit('game-finished'));
+        this.players = null;
+        this.game = null;
         this.currentlyPlaying = false;
-        // this.players.forEach(player => player.socket.emit('game-finished'));
     }
 }
 

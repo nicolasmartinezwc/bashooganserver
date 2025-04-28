@@ -73,7 +73,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         // Registers the console upon connection.
-        const socket = io('http://localhost:3000');
+        const socket = io('http://localhost:3000/admin');
 
         // Register messages upon receivement.
         socket.on('log', (data) => {
