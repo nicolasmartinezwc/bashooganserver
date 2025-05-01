@@ -46,9 +46,12 @@ io.of('/game').on('connection', (socket) => {
         return;
     }
 
-    consoleSocket.emit('log', 'New user connected, searching room for: ' + socket.id);
+    consoleSocket.emit('log', 'New user connected: ' + socket.id);
 
-    roomsManager.findGameFor(socket);
+    socket.on('joined-1v1-room', () => {
+        //roomsManager.debugRoom(socket);
+        roomsManager.findGameFor(socket);
+    });
 
     socket.on('error', (error) => {
         console.log('Error:', error);
@@ -63,7 +66,7 @@ io.of('/game').on('connection', (socket) => {
     });
 });
 
-// Iniciar el servidor en el puerto 3000
+// Start the server in the port 3000
 server.listen(3000, () => {
     console.log('Server running on http://localhost:3000/...');
     open('http://localhost:3000/admin');

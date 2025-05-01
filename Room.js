@@ -23,12 +23,11 @@ class Room {
 
     startGame() {
         this.currentlyPlaying = true;
-        this.players.forEach(player => player.emit('game-started'));
         this.game = new Game(this.players, this.consoleSocket);
     }
 
     finishGame() {
-        this.players.forEach(player => player.emit('game-finished'));
+        this.game.finishGame();
         this.players = null;
         this.game = null;
         this.currentlyPlaying = false;
