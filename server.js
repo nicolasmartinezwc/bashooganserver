@@ -49,8 +49,8 @@ io.of('/game').on('connection', (socket) => {
     consoleSocket.emit('log', 'New user connected: ' + socket.id);
 
     socket.on('joined-1v1-room', () => {
-        //roomsManager.debugRoom(socket);
-        roomsManager.findGameFor(socket);
+        roomsManager.debugRoom(socket);
+        //roomsManager.findGameFor(socket);
     });
 
     socket.on('error', (error) => {
